@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Valentine</title>
+<style>
+body{font-family:'Segoe UI';background:linear-gradient(180deg,#ffe6ee,#fff);margin:0;}
+.card{max-width:420px;margin:60px auto;background:#fff;border-radius:25px;padding:30px;text-align:center;box-shadow:0 15px 40px rgba(255,105,135,.3);}
+button{border:none;border-radius:30px;padding:14px 30px;font-size:18px;margin:10px;cursor:pointer;}
+.yes{background:#ff5c8a;color:#fff;}
+.no{background:#fff;border:1px solid #f3b5c8;}
+.msg{display:none;background:#fff5f8;padding:12px;border-radius:15px;}
+img{max-width:100%;border-radius:20px;margin-top:15px;}
+</style></head>
+<body>
+<div class="card" id="main">
+<h1 id="title"></h1>
+<button class="yes" onclick="yes()">YES</button>
+<button class="no" id="noBtn" onclick="nope()">NO</button>
+<div class="msg" id="msg"></div>
+</div>
+<div class="card" id="final" style="display:none;">
+<h1>💖 YAY!!!</h1>
+<img id="photo"><p id="finalMsg"></p><p id="love"></p>
+</div>
+<script>
+const p=new URLSearchParams(location.search);
+title.innerText=`${p.get("name")}, will you be my Valentine? 💕`;
+love.innerText=`I love you ❤️ ~ ${p.get("from")}`;
+if(p.get("msg"))finalMsg.innerText=p.get("msg");
+if(p.get("photo"))photo.src=p.get("photo");
+const msgs=["Think again","Last chance","Pleaseeee"];
+let i=0;
+function nope(){msg.style.display="block";msg.innerText=msgs[i++%msgs.length];noBtn.style.transform=`translate(${Math.random()*200-100}px,${Math.random()*200-100}px)`;}
+function yes(){main.style.display="none";final.style.display="block";}
+</script>
+</body></html>
