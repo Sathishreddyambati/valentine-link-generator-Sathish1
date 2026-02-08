@@ -63,53 +63,44 @@ button{
 <body>
 
 <div class="container">
-<h1>"Will you be my Valentine?"</h1>
-<p>Create a super cute personalized link 💘</p>
+  <h1>"Will you be my Valentine?"</h1>
+  <p>Create a super cute personalized link 💘</p>
 
-<label>Your Name</label>
-<input id="from" placeholder="e.g., Aaaa">
+  <label>Your Name</label>
+  <input id="from" placeholder="e.g., Rehman">
 
-<label style="margin-top:12px;">Your Valentine's Name</label>
-<input id="to" placeholder="e.g., Bbbbb">
+  <label style="margin-top:12px;">Your Valentine's Name</label>
+  <input id="to" placeholder="e.g., Manisha">
 
-<label style="margin-top:12px;">Your Photo</label>
-<input type="file" id="photo" accept="image/*">
+  <label style="margin-top:12px;">Custom final message</label>
+  <textarea id="custom" placeholder="Write something sweet... 💖"></textarea>
 
-<label style="margin-top:12px;">Custom final message</label>
-<textarea id="custom" placeholder="Write something sweet..."></textarea>
+  <div class="buttons">
+    <button class="generate" onclick="generate()">Generate 💗</button>
+    <button class="copy" onclick="copyLink()">Copy link 🔗</button>
+    <button class="copy" onclick="copyMsg()">Copy message 💌</button>
+    <button class="copy" onclick="openLink()">Open link 💞</button>
+  </div>
 
-<div class="buttons">
-  <button class="generate" onclick="generate()">Generate 💗</button>
-  <button class="copy" onclick="copyLink()">Copy link 🔗</button>
-  <button class="copy" onclick="copyMsg()">Copy message 💌</button>
-  <button class="copy" onclick="openLink()">Open link 💞</button>
-</div>
+  <div class="result" id="result">
+    <p><b>Your personalized URL</b></p>
+    <input id="link" readonly>
 
-<div class="result" id="result">
-  <p><b>Your personalized URL</b></p>
-  <input id="link" readonly>
-  <p><b>Ready-to-send message</b></p>
-  <textarea id="msg"></textarea>
-  <p style="font-size:13px;color:#a04b63;">
-    Tip: You can edit the message before copying ✨
-  </p>
-</div>
+    <p><b>Ready-to-send message</b></p>
+    <textarea id="msg"></textarea>
+
+    <p style="font-size:13px;color:#a04b63;">
+      Tip: You can edit the message before copying ✨
+    </p>
+  </div>
 </div>
 
 <script>
-let photoData = "";
-
-// Read photo as Base64
-document.getElementById("photo").addEventListener("change", e => {
-  if(!e.target.files[0]) return;
-  const reader = new FileReader();
-  reader.onload = () => photoData = reader.result;
-  reader.readAsDataURL(e.target.files[0]);
-});
-
 function generate(){
   const f = from.value.trim();
   const t = to.value.trim();
+  const m = custom.value.trim();
+
   if(!f || !t){
     alert("Enter both names");
     return;
@@ -118,8 +109,7 @@ function generate(){
   const params = new URLSearchParams({
     from: f,
     name: t,
-    msg: custom.value,
-    photo: photoData
+    msg: m
   });
 
   const url =
@@ -143,8 +133,8 @@ ${url}`;
   result.style.display = "block";
 }
 
-/* ✅ ANDROID-SAFE COPY FIX */
-function copyTextFallback(text) {
+/* ✅ ANDROID-SAFE COPY (NO CLIPBOARD API) */
+function copyTextFallback(text){
   const textarea = document.createElement("textarea");
   textarea.value = text;
   textarea.style.position = "fixed";
@@ -155,25 +145,29 @@ function copyTextFallback(text) {
   textarea.select();
 
   let copied = false;
-  try {
+  try{
     copied = document.execCommand("copy");
-  } catch (e) {}
+  }catch(e){}
 
   document.body.removeChild(textarea);
 
-  if (copied) {
+  if(copied){
     alert("Copied to clipboard ✅");
-  } else {
+  }else{
     alert("Tap and hold the text to copy 📋");
   }
 }
 
-function copyLink() {
-  copyTextFallback(document.getElementById("link").value);
+function copyLink(){
+  copyTextFallback(link.value);
 }
 
-function copyMsg() {
-  copyTextFallback(document.getElementById("msg").value);
+function copyMsg(){
+  copyTextFallback(msg.value);
+}
+
+function openLink(){
+  window.open(link.value, "_blank");
 }
 </script>
 
