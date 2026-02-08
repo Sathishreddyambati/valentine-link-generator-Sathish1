@@ -28,7 +28,7 @@ title.innerText=`${p.get("name")}, will you be my Valentine? 💕`;
 love.innerText=`I love you ❤️ ~ ${p.get("from")}`;
 if(p.get("msg"))finalMsg.innerText=p.get("msg");
 if(p.get("photo"))photo.src=p.get("photo");
-const msgs=["Think again","Last chance","Pleaseeee"];
+const msgs=["Heyyy 😳 wrong button! Try again… my heart believes in you 💖","No? Are you sure? Even Cupid is confused 🏹😅","System error 🚨 ‘No’ is temporarily unavailable. Please click ‘Yes’ 💕",“Aww… don’t be shy 😉 Go on, click YES ❤️”,“Nice try 😏 But destiny says YES 💘”,“Take a deep breath… now click YES 💕”];
 let i=0;
 function nope(){msg.style.display="block";msg.innerText=msgs[i++%msgs.length];noBtn.style.transform=`translate(${Math.random()*200-100}px,${Math.random()*200-100}px)`;}
 function yes(){main.style.display="none";final.style.display="block";}
